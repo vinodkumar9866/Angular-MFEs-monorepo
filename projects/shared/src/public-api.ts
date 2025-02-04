@@ -9,4 +9,8 @@ export * from './lib/interfaces/product';
 export * from './lib/directives/index';
 export * from './lib/components/index';
 
-// export * from './lib/components/index';
+// Akita state management
+export * from './lib/store/akita-store/index';
+
+// NgRx state management
+export * from './lib/store/ngrx-store/index';

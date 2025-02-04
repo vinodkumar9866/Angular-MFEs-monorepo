@@ -1,11 +1,18 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, effect, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { CartStoreService } from 'shared';
+import { AkitaCartQuery, CartStoreService, selectCartItemCount } from 'shared';
+import { Store } from '@ngrx/store';
+import { CommonModule } from '@angular/common';
+
+interface ISearch {
+  searchTerm: string;
+  totalCount: number;
+}
 
 @Component({
   selector: 'app-header',
@@ -16,22 +23,52 @@ import { CartStoreService } from 'shared';
     RouterModule,
     MatMenuModule,
     MatButtonModule,
+    CommonModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   title = 'Shopping';
-  searchTerm = '';
-  searchEnable = false;
   cartItemsCount = signal(0);
-  constructor(private cartState: CartStoreService) {
-    effect(() => {
-      this.cartItemsCount.set(this.cartState.getCartItemCount());
-    });
+  search: ISearch = { searchTerm: '', totalCount: 0 };
+
+  constructor(
+    private cartState: CartStoreService,
+
+    // Akita store
+    private cartQuery: AkitaCartQuery,
+
+    // NgRx store
+    private store: Store
+  ) {
+    // this is signal use of cart store from cartState
+    // effect(() => {
+    //   this.cartItemsCount.set(this.cartState.getCartItemCount());
+    // });
   }
 
-  onSearch = () => {
-    this.searchEnable = true;
+  ngOnInit() {
+    // Using Akita
+    // this.cartQuery.getCartItemCount$.subscribe((count) => {
+    //   this.cartItemsCount.set(count);
+    // });
+
+    // using NgRx
+    this.store.select(selectCartItemCount).subscribe((count) => {
+      this.cartItemsCount.set(count);
+    });
+
+    // custom-event communication between MFE's - header to dashboard search
+    window.addEventListener('searchUpdated', this.handleSearchUpdate);
+  }
+
+  private handleSearchUpdate = (event: Event) => {
+    const customEvent = event as CustomEvent<ISearch>;
+    this.search = customEvent.detail;
   };
+
+  ngOnDestroy() {
+    window.removeEventListener('searchUpdated', this.handleSearchUpdate);
+  }
 }

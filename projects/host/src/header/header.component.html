@@ -12,7 +12,15 @@
         <mat-icon class="mat-icon-custom">shopping_cart </mat-icon>
         <span>({{ cartItemsCount() }})</span>
       </li>
-      <li style="padding-top: 1rem"></li>
+      <h5 *ngIf="search.searchTerm && search.searchTerm.trim() !== ''">
+        {{
+          "Search: " +
+            search.searchTerm +
+            " (" +
+            search.totalCount +
+            ") results"
+        }}
+      </h5>
     </ul>
   </nav>
   <!-- Mobile Navigation Menu -->

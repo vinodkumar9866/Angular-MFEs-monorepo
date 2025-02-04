@@ -9,15 +9,21 @@ import { CommonModule } from '@angular/common';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
+  addToCart,
+  AkitaCartQuery,
   CardComponent,
+  CartService,
   CartStoreService,
   CustomButtonComponent,
   FormatPricePipe,
   IProduct,
   normalizeImages,
   ProductService,
+  removeFromCart,
+  selectCartItems,
   // SearchResultService,
 } from 'shared';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-home',
@@ -38,19 +44,67 @@ import {
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit, DoCheck {
-  //card section
-  cartItems = computed(() => this.cartState.getCartItems());
+  constructor(
+    private productService: ProductService,
+    private cartState: CartStoreService, // private searchService: SearchResultService
+
+    // Akita store
+    private cartQuery: AkitaCartQuery,
+    private cartAkitaService: CartService,
+
+    // NgRx store
+    private store: Store
+  ) {}
+
+  // this is signal use of cart store from cartState
+  // cartItems = computed(() => this.cartState.getCartItems());
+  cartItems: IProduct[] = [];
+
+  ngOnInit() {
+    // using Akita query
+    // this.cartQuery.getCartItems$.subscribe((items) => {
+    //   this.cartItems = items;
+    // });
+
+    // using NgRx
+    this.store.select(selectCartItems).subscribe((items) => {
+      this.cartItems = items;
+    });
+
+    this.loadProducts();
+
+    // Listen for updates and refresh products
+    this.productService.onProductsUpdated().subscribe(() => {
+      this.loadProducts();
+    });
+  }
 
   addToCart = (product: IProduct) => {
     if (this.isProductInCart(product)) return;
-    this.cartState.addToCart(product);
+
+    // using cartState of signals store
+    // this.cartState.addToCart(product);
+
+    // using Akita service
+    // this.cartAkitaService.addToCart(product);
+
+    // using NgRx store
+    this.store.dispatch(addToCart({ product }));
   };
+
   removeFromCart(product: IProduct) {
-    this.cartState.removeFromCart(product);
+    // using cartState of signals store
+    // this.cartState.removeFromCart(product);
+
+    // using Akita service
+    // this.cartAkitaService.removeFromCart(product.id);
+
+    // using NgRx store
+    this.store.dispatch(removeFromCart({ productId: product.id }));
   }
 
   isProductInCart(product: IProduct): boolean {
-    return this.cartItems().some((item) => item.id === product.id);
+    return this.cartItems.some((item) => item.id === product.id);
   }
 
   bannerTitle = 'Welcome to Online Shopping';
@@ -71,18 +125,18 @@ export class HomeComponent implements OnInit, DoCheck {
       //   searchTerm: this.searchTerm,
       //   TotalCount: this.filteredProducts.length,
       // });
+      // custom-event communication between MFE's -  dashboard search to header
+      window.dispatchEvent(
+        new CustomEvent('searchUpdated', {
+          detail: {
+            searchTerm: this.searchTerm,
+            totalCount: this.filteredProducts.length,
+          },
+        })
+      );
     } else {
       this.products = [...this.products];
     }
-  }
-
-  ngOnInit() {
-    this.loadProducts();
-
-    // Listen for updates and refresh products
-    this.productService.onProductsUpdated().subscribe(() => {
-      this.loadProducts();
-    });
   }
 
   private loadProducts() {
@@ -95,9 +149,4 @@ export class HomeComponent implements OnInit, DoCheck {
       this.filteredProducts = this.products;
     });
   }
-
-  constructor(
-    private productService: ProductService,
-    private cartState: CartStoreService // private searchService: SearchResultService
-  ) {}
 }
