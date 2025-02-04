@@ -5,7 +5,7 @@ import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideStore, StoreModule } from '@ngrx/store';
-import { cartReducer } from 'shared';
+import { cartReducer } from '../../../shared/src/public-api';
 
 export const appConfig: ApplicationConfig = {
   providers: [

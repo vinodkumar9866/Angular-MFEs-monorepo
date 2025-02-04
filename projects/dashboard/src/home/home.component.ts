@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { Store } from '@ngrx/store';
 import {
   addToCart,
   AkitaCartQuery,
@@ -21,9 +23,7 @@ import {
   ProductService,
   removeFromCart,
   selectCartItems,
-  // SearchResultService,
-} from 'shared';
-import { Store } from '@ngrx/store';
+} from '../../../shared/src/public-api';
 
 @Component({
   selector: 'app-home',

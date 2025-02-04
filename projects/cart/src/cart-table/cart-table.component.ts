@@ -9,6 +9,11 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { Store } from '@ngrx/store';
 import {
   AkitaCartQuery,
   CartService,
@@ -16,11 +21,7 @@ import {
   IProduct,
   removeFromCart,
   selectCartItems,
-} from 'shared';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { Store } from '@ngrx/store';
+} from '../../../shared/src/public-api';
 
 @Component({
   selector: 'cart-table',

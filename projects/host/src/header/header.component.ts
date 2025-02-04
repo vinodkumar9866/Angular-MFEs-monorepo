@@ -5,9 +5,13 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { AkitaCartQuery, CartStoreService, selectCartItemCount } from 'shared';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
+import {
+  AkitaCartQuery,
+  CartStoreService,
+  selectCartItemCount,
+} from '../../../shared/src/public-api';
 
 interface ISearch {
   searchTerm: string;
