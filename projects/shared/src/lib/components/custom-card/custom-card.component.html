@@ -1,0 +1,21 @@
+<mat-card appHilighter appearance="outlined">
+  <!-- Card Header -->
+  <ng-content select="[card-header]"></ng-content>
+
+  <!-- Card Image (Optional) -->
+  <img
+    mat-card-image
+    [src]="product.images[0]"
+    *ngIf="product?.images?.length"
+  />
+
+  <!-- Card Body -->
+  <mat-card-content>
+    <ng-content select="[card-body]"></ng-content>
+  </mat-card-content>
+
+  <!-- Card Actions -->
+  <mat-card-actions>
+    <ng-content select="[card-actions]"></ng-content>
+  </mat-card-actions>
+</mat-card>

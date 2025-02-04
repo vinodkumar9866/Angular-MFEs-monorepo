@@ -1,0 +1,70 @@
+flexer {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  padding-top: 2rem;
+}
+
+.card {
+  display: flex;
+  max-width: 20rem;
+}
+
+.card-container {
+  margin: 1rem;
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: baseline;
+}
+
+mat-form-field.small {
+  --mat-form-field-container-height: 30px;
+  --mat-form-field-container-vertical-padding: 4px;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+img {
+  width: 250px;
+  height: 250px;
+  padding: 1rem;
+}
+.product-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 6rem;
+  display: block;
+}
+
+p {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+  line-clamp: 3;
+  width: 15rem;
+  height: 4rem;
+  margin: 0.5rem 0;
+}
+
+mat-card {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,64 @@
+<div style="padding-left: 2rem">
+  <div style="display: flex; gap: 1rem">
+    <h2>Products</h2>
+    <mat-form-field
+      style="padding-top: 2rem"
+      class="small"
+      appearance="outline"
+      #searchField
+    >
+      <input
+        placeholder="Search products..."
+        matInput
+        type="text"
+        [(ngModel)]="searchTerm"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+  <!-- <div *ngIf="filteredProducts.length > 0"> -->
+  <div class="card-container" #cardContainer>
+    <div *ngFor="let product of filteredProducts">
+      <shared-app-card
+        [product]="product"
+        [isProductInCart]="isProductInCart(product)"
+      >
+        <!-- Card Header -->
+        <div card-header>
+          <h5 style="padding: 1rem; display: flex; gap: 0.5rem">
+            <span
+              class="product-title"
+              [matTooltip]="product.title | titlecase"
+              matTooltipPosition="above"
+            >
+              {{ product.title | titlecase }}
+            </span>
+            <span>( {{ product.price | formatPrice }} )</span>
+          </h5>
+        </div>
+
+        <!-- Card Body -->
+        <div card-body>
+          <p>{{ product.description }}</p>
+        </div>
+
+        <!-- Card Actions -->
+        <div card-actions class="card-actions">
+          <custom-button
+            [label]="isProductInCart(product) ? 'Go to cart' : 'ADD TO CART'"
+            [route]="isProductInCart(product) ? '/cart' : ''"
+            (clicked)="addToCart(product)"
+          ></custom-button>
+
+          <custom-button
+            *ngIf="isProductInCart(product)"
+            [label]="'REMOVE'"
+            [buttonClass]="'danger'"
+            (clicked)="removeFromCart(product)"
+          ></custom-button>
+        </div>
+      </shared-app-card>
+    </div>
+  </div>
+  <!-- </div> -->
+</div>
