@@ -1,1 +1,59 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+@use "@angular/material" as mat;
+
+html,
+body {
+  height: auto;
+  margin: 2rem 0 0 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+// .cdk-global-scrollblock {
+//   position: static !important;
+//   width: initial !important;
+//   overflow-y: inherit !important;
+// }
+
+/* Styling the scrollbar */
+table::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+}
+
+table::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar thumb */
+  border-radius: 5px; /* Rounded corners for the scrollbar */
+}
+
+table::-webkit-scrollbar-thumb:hover {
+  background-color: #9a9a9a; /* Color when hovering over the scrollbar thumb */
+}
+
+table::-webkit-scrollbar-track {
+  background-color: #f0eaea; /* Color of the scrollbar track */
+  border-radius: 5px;
+}
