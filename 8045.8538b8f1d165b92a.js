@@ -1,0 +1,1 @@
+(self.webpackChunkdashboard=self.webpackChunkdashboard||[]).push([[426,8045],{8045:(u,b,e)=>{e.r(b),e.d(b,{coerceObservable:()=>n});var r=e(4866);function n(s){return(0,r.isObservable)(s)?s:(0,r.of)(s)}}}]);
