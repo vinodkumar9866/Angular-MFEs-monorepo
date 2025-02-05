@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { loadRemoteModule } from '@angular-architects/module-federation';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 
 export const routes: Routes = [
   {
