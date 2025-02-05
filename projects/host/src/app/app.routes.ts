@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { loadRemoteModule } from '@angular-architects/module-federation';
+import { environment } from '../../environments/environment';
 
 export const routes: Routes = [
   {
@@ -7,7 +8,7 @@ export const routes: Routes = [
     loadComponent: async () => {
       const m = await loadRemoteModule({
         type: 'module',
-        remoteEntry: 'http://localhost:4300/remoteEntry.js',
+        remoteEntry: `${environment.urls.dashboard}/remoteEntry.js`,
         exposedModule: './Dashboard',
       });
       return m.AppComponent;
@@ -18,7 +19,7 @@ export const routes: Routes = [
     loadComponent: async () => {
       const m = await loadRemoteModule({
         type: 'module',
-        remoteEntry: 'http://localhost:4400/remoteEntry.js',
+        remoteEntry: `${environment.urls.cart}/remoteEntry.js`,
         exposedModule: './Cart',
       });
       return m.AppComponent;
